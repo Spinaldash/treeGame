@@ -14,7 +14,7 @@ angular.module('treeGrow')
   }
 
   Tree.grow = function(treeId){
-    return $http.get(nodeUrl + '/trees/' + treeId + '/grow');
+    return $http.put(nodeUrl + '/trees/' + treeId + '/grow');
   }
 
   return Tree;

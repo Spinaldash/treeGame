@@ -1,5 +1,7 @@
-.mj-tree.col-xs-3.col-sm-2
+.mj-tree.col-xs-3.col-sm-2.text-center
+  div {{state.name}}
   div height: {{height}}
   div health: {{health}}
-  div name: {{state.name}}
+  .progress
+    .progress-bar.progress-bar-striped(role='progressbar', ng-class='{"progress-bar-success": health >= 75, "progress-bar-info": (health >= 50) && (health < 75), "progress-bar-danger": (health >= 25) && (health < 50), "progress-bar-primary": (health >= 0) && (health < 25), }', aria-valuenow='{{health}}', aria-valuemin='0', aria-valuemax='100', style='width: {{health}}%') {{health}}%
   img(ng-src='{{state.url}}', ng-click='grow()')
