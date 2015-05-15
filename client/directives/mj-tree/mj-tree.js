@@ -43,19 +43,6 @@ angular.module('mjTreeModule', [])
     getState();
     getHealthBar();
 
-    $scope.$on('Wildfire', function(event, data){
-      var chances = 1 / 10;
-      var roll = Math.random();
-
-      console.log('chances are:', chances);
-      console.log('your roll was: ', roll);
-
-      if(roll < chances){
-        console.log('This bitch died: ', $scope.id);
-        // $timeout($scope.destroy, 4000);
-      }
-    });
-
     $scope.destroy = function(){
       Tree.destroy($scope.id)
       .then(function(response){
