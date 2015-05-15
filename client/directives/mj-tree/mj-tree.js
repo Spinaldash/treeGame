@@ -20,27 +20,28 @@ angular.module('mjTreeModule', [])
       $scope.state = $window._.find($rootScope.lives, function(life){
         return (life.min <= $scope.height) && (life.max >= $scope.height);
       });
-      $scope.$watch('health', function(){
-        $scope.healthBarColor = function(){
-          if($scope.height >= 75){
-            return '#45dd2d';
-          } else if($scope.height >= 50){
-            return '#ecda15';
-          } else if($scope.height >= 26){
-            return '#ec8619';
-          } else if($scope.height >= 0){
-            return '#f82617';
-          }
-        };
-      });
     }
+
+    // $scope.$watch('health', function(){
+    //   $scope.healthBarColor = function(){
+    //     if($scope.height >= 75){
+    //       return '#45dd2d';
+    //     } else if($scope.height >= 50){
+    //       return '#ecda15';
+    //     } else if($scope.height >= 26){
+    //       return '#ec8619';
+    //     } else if($scope.height >= 0){
+    //       return '#f82617';
+    //     }
+    //   };
+    // });
 
     getState();
 
     $scope.destroy = function(){
       Tree.destroy($scope.id)
       .then(function(response){
-        console.log(response, ' Was destroyed');
+        $rootScope.$broadcast('treeUprooted', response.data._id);
       });
     };
 
@@ -50,8 +51,6 @@ angular.module('mjTreeModule', [])
         $scope.height = response.data.height;
         $scope.health = response.data.health;
         getState();
-        console.log('response.data.health is: ', response.data.health);
-        $scope.healthBarColor(response.data.health);
       });
     };
   };

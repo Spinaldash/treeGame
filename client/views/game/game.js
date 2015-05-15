@@ -1,7 +1,7 @@
 'use strict',
 
 angular.module('treeGrow')
-.controller('GameCtrl', function($rootScope, $scope, Life, Tree){
+.controller('GameCtrl', function($rootScope, $scope, $window, Life, Tree){
   Life.find()
   .then(function(lifeResponse){
     $rootScope.lives = lifeResponse.data.lives;
@@ -12,9 +12,16 @@ angular.module('treeGrow')
     });
   });
 
+  $scope.$on('treeUprooted', function(event, data){
+    $window._.remove($scope.trees, function(e){
+      return e._id === data;
+    });
+  });
+
   $scope.plantTree = function(){
     Tree.create()
     .then(function(response){
+      $scope.trees.push(response.data);
     });
   };
 });
