@@ -15,33 +15,51 @@ angular.module('mjTreeModule', [])
   };
    // declaring a scope makes it an isolated scope
   o.link = function($scope, element, attrs){};
-  o.controller = function($rootScope, $window, $scope, Tree){
+  o.controller = function($rootScope, $window, $scope, $timeout, Tree){
     function getState(){
       $scope.state = $window._.find($rootScope.lives, function(life){
         return (life.min <= $scope.height) && (life.max >= $scope.height);
       });
     }
 
-    // $scope.$watch('health', function(){
-    //   $scope.healthBarColor = function(){
-    //     if($scope.height >= 75){
-    //       return '#45dd2d';
-    //     } else if($scope.height >= 50){
-    //       return '#ecda15';
-    //     } else if($scope.height >= 26){
-    //       return '#ec8619';
-    //     } else if($scope.height >= 0){
-    //       return '#f82617';
-    //     }
-    //   };
-    // });
+    function getHealthBar(){
+      var color;
+      var health = $scope.health;
+
+      if(health >= 75){
+        color = '#2ad52d';
+      } else if(health >= 50){
+        color = '#e9df20';
+      } else if(health >= 25){
+        color = '#f9962c';
+      } else if(health >= 0){
+        color = '#ee0000';
+      }
+
+      $scope.healthBar = {'background-color': color, width: $scope.health + '%'};
+    }
+
 
     getState();
+    getHealthBar();
+
+    $scope.$on('Wildfire', function(event, data){
+      var chances = 1 / 10;
+      var roll = Math.random();
+
+      console.log('chances are:', chances);
+      console.log('your roll was: ', roll);
+
+      if(roll < chances){
+        console.log('This bitch died: ', $scope.id);
+        // $timeout($scope.destroy, 4000);
+      }
+    });
 
     $scope.destroy = function(){
       Tree.destroy($scope.id)
       .then(function(response){
-        $rootScope.$broadcast('treeUprooted', response.data._id);
+        $scope.$emit('treeUprooted', response.data._id);
       });
     };
 
@@ -51,6 +69,7 @@ angular.module('mjTreeModule', [])
         $scope.height = response.data.height;
         $scope.health = response.data.health;
         getState();
+        getHealthBar();
       });
     };
   };
