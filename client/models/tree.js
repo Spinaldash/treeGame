@@ -11,11 +11,16 @@ angular.module('treeGrow')
 
   Tree.find = function(){
     return $http.get(nodeUrl + '/trees');
-  }
+  };
 
   Tree.grow = function(treeId){
     return $http.put(nodeUrl + '/trees/' + treeId + '/grow');
-  }
+  };
+
+  Tree.destroy = function(treeId){
+    return $http.delete(nodeUrl + '/trees/' + treeId + '/destroy');
+  };
+
 
   return Tree;
 });
