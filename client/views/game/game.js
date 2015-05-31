@@ -1,4 +1,4 @@
-'use strict',
+'use strict';
 
 angular.module('treeGrow')
 .controller('GameCtrl', function($rootScope, $scope, $window, Life, Tree){
@@ -20,17 +20,25 @@ angular.module('treeGrow')
   });
 
   // litsening for the plague
-  $scope.$on('Plague', function(event, data){
-    var chances = 1 / 10;
-    var roll = Math.random();
-
-    console.log('chances are:', chances);
-    console.log('your roll was: ', roll);
-    console.log(data);
-    if(roll < chances){
-      console.log('This tree succumbed to ' + data.name + ':', $scope.id);
-      // $timeout($scope.destroy, 4000);
-    }
+  $scope.$on('Plague', function(event, dataObj){
+    console.log('data is:', dataObj);
+    Tree.plague(dataObj)
+    .then(function(){
+      Tree.find()
+      .then(function(treeResponse){
+        $scope.trees = treeResponse.data.trees;
+      });
+    });
+    // var chances = 1 / 10;
+    // var roll = Math.random();
+    //
+    // console.log('chances are:', chances);
+    // console.log('your roll was: ', roll);
+    // console.log(data);
+    // if(roll < chances){
+    //   console.log('This tree succumbed to ' + data.name + ':', $scope.id);
+    //   // $timeout($scope.destroy, 4000);
+    // }
   });
 
   $scope.plantTree = function(){

@@ -21,6 +21,10 @@ angular.module('treeGrow')
     return $http.delete(nodeUrl + '/trees/' + treeId + '/destroy');
   };
 
+  Tree.plague = function(plagueObj){
+    return $http.put(nodeUrl + '/trees/plague', plagueObj);
+  };
+
 
   return Tree;
 });

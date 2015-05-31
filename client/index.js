@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('treeGrow', ['firebase', 'ui.router', 'mjTreeModule', 'mjPlagueModule']);
+angular.module('treeGrow', ['firebase', 'ui.router', 'mjTreeModule', 'mjPlagueModule', 'mjPailModule']);
