@@ -17,6 +17,7 @@ angular.module('mjPailModule', [])
   o.controller = function($rootScope, $window, $scope, $timeout, $interval){
     function waterTime(){
       console.log('water-time!!! yay!');
+      $rootScope.$broadcast('tree-grow');
     }
 
     $interval(waterTime, 2000);

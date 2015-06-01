@@ -50,7 +50,9 @@ angular.module('mjTreeModule', [])
       });
     };
 
+
     $scope.grow = function(){
+      // I should refactor this code to avoid duplication... oi!
       Tree.grow($scope.id)
       .then(function(response){
         $scope.height = response.data.height;
@@ -59,6 +61,16 @@ angular.module('mjTreeModule', [])
         getHealthBar();
       });
     };
+
+    $scope.$on('tree-grow', function(event, data){
+      Tree.grow($scope.id)
+      .then(function(response){
+        $scope.height = response.data.height;
+        $scope.health = response.data.health;
+        getState();
+        getHealthBar();
+      });
+    });
   };
 
   return o;
